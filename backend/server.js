@@ -22,8 +22,12 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/auth', authRoutes);
 
 // === Old Ask Route (for Q&A) ===
-app.post('/api/ask', async (req, res) => {
-    const { question } = req.body;
+app.post('/api/generate-code', async (req, res) => {
+    const { prompt } = req.body;
+
+    if (!prompt || !prompt.trim()) {
+        return res.status(400).json({ error: 'Prompt is required' });
+    }
 
     try {
         const response = await fetch(
@@ -34,15 +38,28 @@ app.post('/api/ask', async (req, res) => {
                     Authorization: `Bearer ${process.env.HF_API_KEY}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ inputs: question }),
+                body: JSON.stringify({ inputs: prompt }),
             }
         );
 
         const data = await response.json();
-        res.json({ answer: data[0]?.generated_text || 'No answer generated.' });
+        console.log("HF raw response:", data); // 👈 Log what HF sends back
+
+        if (data.error) {
+            return res.status(500).json({
+                error: 'Hugging Face API error',
+                details: data.error
+            });
+        }
+
+        res.json({
+            code: Array.isArray(data) && data[0]?.generated_text
+                ? data[0].generated_text
+                : 'No code generated.',
+        });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Something went wrong' });
+        console.error("Server error:", error);
+        res.status(500).json({ error: 'Error generating code' });
     }
 });
 
