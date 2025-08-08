@@ -2,13 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const fetch = require('node-fetch'); // ✅ Use require, not import
+
 dotenv.config();
 
 const blogRoutes = require('./routes/blogs');
 const productRoutes = require('./routes/products');
 const contactRoutes = require('./routes/contact');
 const authRoutes = require('./routes/auth');
-const fetch = require('node-fetch');
 
 const app = express();
 app.use(cors());
@@ -21,7 +22,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/auth', authRoutes);
 
-// === Old Ask Route (for Q&A) ===
+// === AI Code Generator Route ===
 app.post('/api/generate-code', async (req, res) => {
     const { prompt } = req.body;
 
@@ -43,7 +44,7 @@ app.post('/api/generate-code', async (req, res) => {
         );
 
         const data = await response.json();
-        console.log("HF raw response:", data); // 👈 Log what HF sends back
+        console.log("HF raw response:", data); // ✅ Log Hugging Face's response
 
         if (data.error) {
             return res.status(500).json({
@@ -59,48 +60,6 @@ app.post('/api/generate-code', async (req, res) => {
         });
     } catch (error) {
         console.error("Server error:", error);
-        res.status(500).json({ error: 'Error generating code' });
-    }
-});
-
-// === New AI Code Generator Route ===
-app.post('/api/generate-code', async (req, res) => {
-    const { prompt } = req.body;
-
-    if (!prompt || !prompt.trim()) {
-        return res.status(400).json({ error: 'Prompt is required' });
-    }
-
-    try {
-        const response = await fetch(
-            'https://api-inference.huggingface.co/models/codellama/CodeLlama-7b-Instruct-hf',
-            {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${process.env.HF_API_KEY}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ inputs: prompt }),
-            }
-        );
-
-        const data = await response.json();
-
-        if (data.error) {
-            console.error('HF API Error:', data.error);
-            return res.status(500).json({
-                error: 'Hugging Face API error',
-                details: data.error,
-            });
-        }
-
-        res.json({
-            code: Array.isArray(data) && data[0]?.generated_text
-                ? data[0].generated_text
-                : 'No code generated.',
-        });
-    } catch (error) {
-        console.error(error);
         res.status(500).json({ error: 'Error generating code' });
     }
 });
