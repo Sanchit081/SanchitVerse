@@ -15,7 +15,7 @@ import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import AiCodeGenerator from "./pages/AiCodeGenerator";
-
+import Ask from "./pages/Ask";
 function App() {
   return (
     <AuthProvider>
