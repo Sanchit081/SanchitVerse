@@ -213,42 +213,91 @@ const Home = () => {
             </div>
           )}
         </motion.div>
-        {/* Central Orbit Circle (moved to be between the two sections) */}
+
+        {/* Central Orbit Circle (moved and styled as an arc) */}
+        <style jsx>{`
+          @keyframes rotate-y-axis {
+            from {
+              transform: rotateY(0deg);
+            }
+            to {
+              transform: rotateY(360deg);
+            }
+          }
+          .orbit-container {
+            perspective: 1000px; /* Gives the 3D effect */
+          }
+          .orbit-arc {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top: 2px dashed #8697C4;
+            border-radius: 50%;
+            transform-origin: center center;
+            animation: rotate-y-axis 25s linear infinite;
+          }
+          .orbit-dot {
+            position: absolute;
+            background-color: #3D52A0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            transform-origin: center center;
+            top: 50%;
+            left: 50%;
+            transform: translate(calc(var(--dot-position) * 1px), -50%) rotateY(calc(var(--dot-rotation) * 1deg));
+          }
+          .orbit-dot-2 {
+            background-color: #7091E6;
+            width: 0.75rem;
+            height: 0.75rem;
+          }
+        `}</style>
         <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] lg:w-[40%] lg:h-[40%] flex items-center justify-center pointer-events-none">
-          {/* The Orbit Circle */}
-          <motion.div
-            className="absolute w-full h-full border border-dashed border-[#8697C4] rounded-full"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-          />
-          {/* Orbiting Dot 1 */}
-          <motion.div
-            className="absolute w-4 h-4 rounded-full bg-[#3D52A0]"
-            animate={{
-              x: [0, 'calc(50% - 8px)', 0, 'calc(-50% + 8px)', 0],
-              y: [0, 0, 'calc(50% - 8px)', 0, 'calc(-50% + 8px)'],
-            }}
-            transition={{
-              duration: 25,
-              ease: "linear",
-              repeat: Infinity,
-            }}
-          />
-          {/* Orbiting Dot 2 */}
-          <motion.div
-            className="absolute w-3 h-3 rounded-full bg-[#7091E6]"
-            animate={{
-              x: [0, 'calc(-50% + 6px)', 0, 'calc(50% - 6px)', 0],
-              y: [0, 0, 'calc(-50% + 6px)', 0, 'calc(50% - 6px)'],
-            }}
-            transition={{
-              duration: 25,
-              ease: "linear",
-              repeat: Infinity,
-              delay: 5,
-            }}
-          />
+          <div className="relative w-full h-full orbit-container">
+            {/* The Orbit Arc */}
+            <motion.div
+              className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] border-2 border-dashed border-gray-400 rounded-full"
+              style={{
+                borderTopColor: '#8697C4',
+                borderLeftColor: 'transparent',
+                borderRightColor: 'transparent',
+                borderBottomColor: 'transparent',
+              }}
+              animate={{ rotateZ: 360 }}
+              transition={{ duration: 20, ease: "linear", repeat: Infinity }}
+            />
+            {/* Orbiting Dot 1 */}
+            <motion.div
+              className="absolute w-4 h-4 rounded-full bg-[#3D52A0]"
+              animate={{
+                x: [0, 200, 0, -200, 0],
+                y: [0, 0, 200, 0, -200],
+              }}
+              transition={{
+                duration: 25,
+                ease: "linear",
+                repeat: Infinity,
+              }}
+            />
+            {/* Orbiting Dot 2 */}
+            <motion.div
+              className="absolute w-3 h-3 rounded-full bg-[#7091E6]"
+              animate={{
+                x: [0, -150, 0, 150, 0],
+                y: [0, 0, -150, 0, 150],
+              }}
+              transition={{
+                duration: 25,
+                ease: "linear",
+                repeat: Infinity,
+                delay: 5,
+              }}
+            />
+          </div>
         </div>
+
         {/* Animation */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
