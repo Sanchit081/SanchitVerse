@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,25 +13,23 @@ import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
-
 function App() {
+  const [appLoading, setAppLoading] = useState(false);
+
   return (
     <AuthProvider>
       <Router>
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-          <Navbar />
+          {!appLoading && <Navbar />}
           <main>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home setAppLoading={setAppLoading} />} />
               <Route path="/products" element={<Products />} />
               <Route path="/services" element={<Services />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              
-              {/* Removed routes for deleted pages */}
-
               <Route
                 path="/admin"
                 element={
@@ -42,7 +40,7 @@ function App() {
               />
             </Routes>
           </main>
-          <Footer />
+          {!appLoading && <Footer />}
         </div>
       </Router>
     </AuthProvider>
