@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-import Chat from "./pages/Chat";
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Services from './pages/Services';
@@ -31,11 +30,8 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/ai-code-generator" element={<AiCodeGenerator />} />
-
-              {/* AI Routes */}
-              <Route path="/ask" element={<Ask />} />
-              <Route path="/chat" element={<Chat />} />
+              
+              {/* Removed routes for deleted pages: AiCodeGenerator, Ask, and Chat */}
 
               <Route
                 path="/admin"
