@@ -10,13 +10,15 @@ import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
 
-const FloatingDot = ({ delay, size, duration, startX, startY, endX, endY }) => {
+// New FloatingDot component with corrected animation logic
+const FloatingDot = ({ delay, size, duration, startX, startY }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = (e) => {
-    e.stopPropagation(); // Prevents the click from bubbling up
+    e.stopPropagation();
     setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 500); // Reset after 500ms
+    // Double size for a moment, then shrink back
+    setTimeout(() => setIsClicked(false), 500); 
   };
 
   return (
@@ -28,12 +30,14 @@ const FloatingDot = ({ delay, size, duration, startX, startY, endX, endY }) => {
         height: `${size}px`,
         top: `${startY}%`,
         left: `${startX}%`,
-        backgroundColor: size > 7 ? '#7091E6' : '#8697C4', // Larger dots get a different color
+        backgroundColor: size > 7 ? '#7091E6' : '#8697C4',
+        opacity: 0.8
       }}
       animate={{
-        x: [0, endX],
-        y: [0, endY],
+        x: [0, Math.random() * 100 - 50, 0], // Move randomly between -50px and +50px
+        y: [0, Math.random() * 100 - 50, 0], // Move randomly between -50px and +50px
         scale: isClicked ? [1, 2, 1] : 1,
+        opacity: [0.8, 1, 0.8], // Subtle opacity change
       }}
       transition={{
         duration: duration,
@@ -176,7 +180,7 @@ const Home = () => {
         ))}
       </div>
 
-      {/* 💫 Floating Dots Background */}
+      {/* 💫 Floating Dots Background (Corrected) */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {[...Array(50)].map((_, i) => (
           <FloatingDot
@@ -186,8 +190,6 @@ const Home = () => {
             duration={20 + Math.random() * 20} // Duration between 20s and 40s
             startX={Math.random() * 100}
             startY={Math.random() * 100}
-            endX={Math.random() * 100}
-            endY={Math.random() * 100}
           />
         ))}
       </div>
