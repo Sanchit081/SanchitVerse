@@ -5,27 +5,35 @@ const AiCodeGenerator = () => {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Backend base URL (Render in production, localhost in dev)
+  const API_BASE =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:5000"
+      : "https://sanchitverse.onrender.com";
 
   const generateCode = async () => {
     if (!prompt.trim()) return;
     setLoading(true);
     setResponse("");
+    setError("");
 
     try {
-      const res = await axios.post(
-        "https://api-inference.huggingface.co/models/codellama/CodeLlama-7b-Instruct-hf",
-        { inputs: prompt },
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
-          },
-        }
-      );
-      setResponse(res.data[0]?.generated_text || "No code generated.");
-    } catch (error) {
-      console.error(error);
-      setResponse("Error generating code.");
+      const res = await axios.post(`${API_BASE}/api/generate-code`, { prompt });
+
+      if (res.data.code) {
+        setResponse(res.data.code);
+      } else if (res.data.error) {
+        setError(res.data.error);
+      } else {
+        setResponse("No code generated.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Error generating code. Please try again.");
     }
+
     setLoading(false);
   };
 
@@ -46,7 +54,12 @@ const AiCodeGenerator = () => {
       >
         {loading ? "Generating..." : "Generate Code"}
       </button>
-      {response && (
+
+      {error && (
+        <div style={{ color: "red", marginTop: "10px" }}>{error}</div>
+      )}
+
+      {response && !error && (
         <pre
           style={{
             background: "#f4f4f4",
