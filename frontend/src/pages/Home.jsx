@@ -134,7 +134,7 @@ const Home = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, delay: 2.5 }}
           >
-            <style jsx>{`
+            <style jsx="true">{`
               @keyframes shimmer-loader {
                 0% {
                   background-position: -200% 0;
