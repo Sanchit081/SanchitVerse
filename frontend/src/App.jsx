@@ -31,7 +31,8 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/ai-code" element={<AiCodeGenerator />} />
+              <Route path="/ai-code-generator" element={<AiCodeGenerator />} />
+
               {/* AI Routes */}
               <Route path="/ask" element={<Ask />} />
               <Route path="/chat" element={<Chat />} />
