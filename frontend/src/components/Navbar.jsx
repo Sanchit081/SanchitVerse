@@ -13,7 +13,6 @@ const Navbar = () => {
   const [showAboutDropdown, setShowAboutDropdown] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-<Link to="/ai-code">AI Code Generator</Link>
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -45,7 +44,7 @@ const Navbar = () => {
             <img
               src={VerseLogo}
               alt="SanchitVerse Logo"
-              className="w-1 sm:w-16 h-auto object-contain drop-shadow-lg transition-transform duration-300 hover:scale-105"
+              className="w-12 sm:w-16 h-auto object-contain drop-shadow-lg transition-transform duration-300 hover:scale-105"
             />
             <span className="text-base sm:text-2xl font-bold text-[#3D52A0] ml-1">
               SanchitVerse
@@ -60,7 +59,7 @@ const Navbar = () => {
               { label: 'Services', to: '/services' },
               { label: 'Blog', to: '/blog' },
               { label: 'Contact', to: '/contact' },
-              { label: 'AI Code Generator', to: '/ai-code-generator' }, // ✅ Added here
+              { label: 'AI Code Generator', to: '/ai-code-generator' }, // ✅ Correct link
             ].map((item) => (
               <Link
                 key={item.to}
@@ -175,7 +174,7 @@ const Navbar = () => {
                 { label: 'Services', to: '/services' },
                 { label: 'Blog', to: '/blog' },
                 { label: 'Contact', to: '/contact' },
-                { label: 'AI Code Generator', to: '/ai-code-generator' }, // ✅ Added here too
+                { label: 'AI Code Generator', to: '/ai-code-generator' }, // ✅ Correct here too
               ].map((item) => (
                 <Link
                   key={item.to}

@@ -1,4 +1,3 @@
-// src/pages/AiCodeGenerator.jsx
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -22,10 +21,10 @@ const AiCodeGenerator = () => {
           },
         }
       );
-      setResponse(res.data[0]?.generated_text || "No response from model.");
+      setResponse(res.data[0]?.generated_text || "No code generated.");
     } catch (error) {
       console.error(error);
-      setResponse("Error generating code. Check console for details.");
+      setResponse("Error generating code.");
     }
     setLoading(false);
   };
@@ -35,25 +34,18 @@ const AiCodeGenerator = () => {
       <h1>💻 AI Code Generator</h1>
       <textarea
         rows="4"
-        style={{ width: "100%", padding: "10px", fontSize: "1rem" }}
-        placeholder="Enter your coding prompt..."
+        style={{ width: "100%", padding: "10px" }}
+        placeholder="Enter your coding request..."
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
       />
-      <br />
       <button
         onClick={generateCode}
-        style={{
-          marginTop: "10px",
-          padding: "10px 20px",
-          fontSize: "1rem",
-          cursor: "pointer",
-        }}
+        style={{ marginTop: "10px", padding: "10px 20px" }}
         disabled={loading}
       >
         {loading ? "Generating..." : "Generate Code"}
       </button>
-
       {response && (
         <pre
           style={{
