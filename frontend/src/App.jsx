@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -14,16 +14,14 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
-  const [appLoading, setAppLoading] = useState(false);
-
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-          {!appLoading && <Navbar />}
-          <main>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex flex-col">
+          <Navbar />
+          <main className="flex-grow">
             <Routes>
-              <Route path="/" element={<Home setAppLoading={setAppLoading} />} />
+              <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/services" element={<Services />} />
               <Route path="/blog" element={<Blog />} />
@@ -40,7 +38,7 @@ function App() {
               />
             </Routes>
           </main>
-          {!appLoading && <Footer />}
+          <Footer />
         </div>
       </Router>
     </AuthProvider>

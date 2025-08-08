@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { motion } from 'framer-motion';
@@ -9,18 +9,8 @@ import WebDevToolkitImg from '../assets/products/img2.svg';
 import SEOGuideImg from '../assets/products/img3.svg';
 import JourneyIllustration from '../assets/products/growth.svg';
 
-const Home = ({ setAppLoading }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const Home = () => {
   const [searchResults, setSearchResults] = useState([]);
-
-  useEffect(() => {
-    setAppLoading(true); // Tell App.jsx loader is active
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      setAppLoading(false); // Tell App.jsx loader finished
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [setAppLoading]);
 
   const products = [
     {
@@ -60,41 +50,6 @@ const Home = ({ setAppLoading }) => {
       date: "July 2025",
     }
   ];
-
-  if (isLoading) {
-    // Loader page only
-    return (
-      <motion.div
-        className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-white"
-        initial={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7 }}
-          className="text-4xl md:text-6xl font-extrabold text-[#3D52A0] text-center px-4"
-        >
-          Welcome to SanchitVerse
-        </motion.h1>
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-4 text-lg md:text-xl text-[#8697C4] text-center px-4"
-        >
-          Loading your experience...
-        </motion.p>
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: '200px' }}
-          transition={{ duration: 2, delay: 0.5, ease: 'easeInOut' }}
-          className="mt-8 h-1 bg-gradient-to-r from-[#7091E6] to-[#3D52A0] rounded-full"
-        />
-      </motion.div>
-    );
-  }
 
   return (
     <div className="font-body bg-white text-[#1E1E28] relative overflow-hidden pb-28">
