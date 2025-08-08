@@ -10,6 +10,42 @@ import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
 
+const FloatingDot = ({ delay, size, duration, startX, startY, endX, endY }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = (e) => {
+    e.stopPropagation(); // Prevents the click from bubbling up
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 500); // Reset after 500ms
+  };
+
+  return (
+    <motion.div
+      onClick={handleClick}
+      className="absolute rounded-full cursor-pointer"
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        top: `${startY}%`,
+        left: `${startX}%`,
+        backgroundColor: size > 7 ? '#7091E6' : '#8697C4', // Larger dots get a different color
+      }}
+      animate={{
+        x: [0, endX],
+        y: [0, endY],
+        scale: isClicked ? [1, 2, 1] : 1,
+      }}
+      transition={{
+        duration: duration,
+        repeat: Infinity,
+        repeatType: "mirror",
+        ease: "easeInOut",
+        delay: delay,
+      }}
+    />
+  );
+};
+
 const Home = () => {
   const [showNewsletter, setShowNewsletter] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -139,6 +175,23 @@ const Home = () => {
           />
         ))}
       </div>
+
+      {/* 💫 Floating Dots Background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {[...Array(50)].map((_, i) => (
+          <FloatingDot
+            key={i}
+            delay={Math.random() * 10}
+            size={Math.random() * 10 + 3} // Size between 3 and 13
+            duration={20 + Math.random() * 20} // Duration between 20s and 40s
+            startX={Math.random() * 100}
+            startY={Math.random() * 100}
+            endX={Math.random() * 100}
+            endY={Math.random() * 100}
+          />
+        ))}
+      </div>
+
       {/* 🔷 Hero Section */}
       <section className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-4 md:px-20 pt-6 pb-10 min-h-[75vh] md:min-h-[90vh]">
         {/* Text content */}
@@ -213,91 +266,6 @@ const Home = () => {
             </div>
           )}
         </motion.div>
-
-        {/* Central Orbit Circle (moved and styled as an arc) */}
-        <style jsx>{`
-          @keyframes rotate-y-axis {
-            from {
-              transform: rotateY(0deg);
-            }
-            to {
-              transform: rotateY(360deg);
-            }
-          }
-          .orbit-container {
-            perspective: 1000px; /* Gives the 3D effect */
-          }
-          .orbit-arc {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 2px solid transparent;
-            border-top: 2px dashed #8697C4;
-            border-radius: 50%;
-            transform-origin: center center;
-            animation: rotate-y-axis 25s linear infinite;
-          }
-          .orbit-dot {
-            position: absolute;
-            background-color: #3D52A0;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            transform-origin: center center;
-            top: 50%;
-            left: 50%;
-            transform: translate(calc(var(--dot-position) * 1px), -50%) rotateY(calc(var(--dot-rotation) * 1deg));
-          }
-          .orbit-dot-2 {
-            background-color: #7091E6;
-            width: 0.75rem;
-            height: 0.75rem;
-          }
-        `}</style>
-        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] lg:w-[40%] lg:h-[40%] flex items-center justify-center pointer-events-none">
-          <div className="relative w-full h-full orbit-container">
-            {/* The Orbit Arc */}
-            <motion.div
-              className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] border-2 border-dashed border-gray-400 rounded-full"
-              style={{
-                borderTopColor: '#8697C4',
-                borderLeftColor: 'transparent',
-                borderRightColor: 'transparent',
-                borderBottomColor: 'transparent',
-              }}
-              animate={{ rotateZ: 360 }}
-              transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-            />
-            {/* Orbiting Dot 1 */}
-            <motion.div
-              className="absolute w-4 h-4 rounded-full bg-[#3D52A0]"
-              animate={{
-                x: [0, 200, 0, -200, 0],
-                y: [0, 0, 200, 0, -200],
-              }}
-              transition={{
-                duration: 25,
-                ease: "linear",
-                repeat: Infinity,
-              }}
-            />
-            {/* Orbiting Dot 2 */}
-            <motion.div
-              className="absolute w-3 h-3 rounded-full bg-[#7091E6]"
-              animate={{
-                x: [0, -150, 0, 150, 0],
-                y: [0, 0, -150, 0, 150],
-              }}
-              transition={{
-                duration: 25,
-                ease: "linear",
-                repeat: Infinity,
-                delay: 5,
-              }}
-            />
-          </div>
-        </div>
-
         {/* Animation */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
