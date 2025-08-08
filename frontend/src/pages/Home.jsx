@@ -55,20 +55,48 @@ const Home = () => {
       description: "Advanced SEO strategies for professionals.",
       image: SEOGuideImg,
     },
+    {
+      id: 4,
+      name: "UI/UX Design Templates",
+      price: "Launching Soon",
+      description: "Beautiful, modern templates for your next project.",
+      image: "https://via.placeholder.com/150?text=UI/UX",
+      comingSoon: true,
+    },
+    {
+      id: 5,
+      name: "AI Automation Toolkit",
+      price: "Launching Soon",
+      description: "AI-powered scripts & tools to save you hours of work.",
+      image: "https://via.placeholder.com/150?text=AI+Toolkit",
+      comingSoon: true,
+    },
   ];
 
   const blogs = [
     {
       id: 1,
-      title: "Digital Marketing in 2025",
-      excerpt: "Trends and strategies that are shaping the future...",
-      date: "March 2024",
+      title: "The Rise of AI in Everyday Life",
+      excerpt: "From smart assistants to automated content creation, AI is shaping our daily routines faster than ever...",
+      date: "August 2025",
     },
     {
       id: 2,
-      title: "React Best Practices",
-      excerpt: "How to write clean, scalable React code in 2024...",
-      date: "Feb 2024",
+      title: "Top 10 Web Development Trends in 2025",
+      excerpt: "A look into the tools, frameworks, and practices defining modern web development...",
+      date: "July 2025",
+    },
+    {
+      id: 3,
+      title: "Mastering SEO in the AI Era",
+      excerpt: "Search engines are evolving — here's how you can stay ahead in the rankings...",
+      date: "June 2025",
+    },
+    {
+      id: 4,
+      title: "Why UI/UX Design Matters More Than Ever",
+      excerpt: "User expectations are at an all-time high — great design can make or break your product...",
+      date: "May 2025",
     },
   ];
 
@@ -185,11 +213,16 @@ const Home = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.15, duration: 0.6 }}
-                className="relative bg-[#FCFCFD] rounded-2xl shadow-lg transition-shadow p-6 border border-[#EDE8F5] hover:-translate-y-2 duration-300 text-center"
+                className={`relative bg-[#FCFCFD] rounded-2xl shadow-lg transition-shadow p-6 border border-[#EDE8F5] hover:-translate-y-2 duration-300 text-center ${product.comingSoon ? 'opacity-70' : ''}`}
               >
                 {product.highlight && (
                   <span className="absolute top-4 right-4 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                     Most Selling
+                  </span>
+                )}
+                {product.comingSoon && (
+                  <span className="absolute top-4 right-4 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                    Coming Soon
                   </span>
                 )}
                 <img src={product.image} alt={product.name} className="h-28 w-28 object-contain drop-shadow-lg mx-auto mb-6" />
@@ -230,7 +263,8 @@ const Home = () => {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 px-4">
           <div className="flex-1 text-center md:text-left">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Level Up Your Digital Journey</h2>
-            <p className="text-[#555] mb-8">Join thousands of creators and learners using <strong className="text-[#3D52A0]">SanchitVerse</strong>.</p>
+            <p className="text-[#555] mb-4">Join thousands of creators, developers, and learners using <strong className="text-[#3D52A0]">SanchitVerse</strong> to stay ahead of the curve.</p>
+            <p className="text-[#555] mb-8">We bring you tools, templates, and insights — all in one place.</p>
             <Link to="/contact">
               <button className="bg-[#7091E6] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3D52A0] transition shadow-xl animate-pulse">
                 Get Started
