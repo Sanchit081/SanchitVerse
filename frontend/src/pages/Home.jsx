@@ -213,7 +213,43 @@ const Home = () => {
             </div>
           )}
         </motion.div>
-        {/* Animation & Orbit */}
+        {/* Central Orbit Circle (moved to be between the two sections) */}
+        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] lg:w-[40%] lg:h-[40%] flex items-center justify-center pointer-events-none">
+          {/* The Orbit Circle */}
+          <motion.div
+            className="absolute w-full h-full border border-dashed border-[#8697C4] rounded-full"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+          />
+          {/* Orbiting Dot 1 */}
+          <motion.div
+            className="absolute w-4 h-4 rounded-full bg-[#3D52A0]"
+            animate={{
+              x: [0, 'calc(50% - 8px)', 0, 'calc(-50% + 8px)', 0],
+              y: [0, 0, 'calc(50% - 8px)', 0, 'calc(-50% + 8px)'],
+            }}
+            transition={{
+              duration: 25,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+          />
+          {/* Orbiting Dot 2 */}
+          <motion.div
+            className="absolute w-3 h-3 rounded-full bg-[#7091E6]"
+            animate={{
+              x: [0, 'calc(-50% + 6px)', 0, 'calc(50% - 6px)', 0],
+              y: [0, 0, 'calc(-50% + 6px)', 0, 'calc(50% - 6px)'],
+            }}
+            transition={{
+              duration: 25,
+              ease: "linear",
+              repeat: Infinity,
+              delay: 5,
+            }}
+          />
+        </div>
+        {/* Animation */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -230,42 +266,6 @@ const Home = () => {
               maxWidth: '520px'
             }}
           />
-          {/* Orbit Circle and Dots */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] md:w-[70%] md:h-[70%] flex items-center justify-center">
-            {/* The Orbit Circle */}
-            <motion.div
-              className="absolute w-full h-full border border-dashed border-[#8697C4] rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-            />
-            {/* Orbiting Dot 1 */}
-            <motion.div
-              className="absolute w-4 h-4 rounded-full bg-[#3D52A0]"
-              animate={{
-                x: [0, 200, 0, -200, 0],
-                y: [0, 0, 200, 0, -200],
-              }}
-              transition={{
-                duration: 25,
-                ease: "linear",
-                repeat: Infinity,
-              }}
-            />
-            {/* Orbiting Dot 2 */}
-            <motion.div
-              className="absolute w-3 h-3 rounded-full bg-[#7091E6]"
-              animate={{
-                x: [0, -150, 0, 150, 0],
-                y: [0, 0, -150, 0, 150],
-              }}
-              transition={{
-                duration: 25,
-                ease: "linear",
-                repeat: Infinity,
-                delay: 5,
-              }}
-            />
-          </div>
         </motion.div>
       </section>
       {/* 🛒 Products Section */}
