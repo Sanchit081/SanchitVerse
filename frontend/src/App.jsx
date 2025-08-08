@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
+import AiCodeGenerator from "./pages/AiCodeGenerator";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-
+              <Route path="/ai-code" element={<AiCodeGenerator />} />
               {/* AI Routes */}
               <Route path="/ask" element={<Ask />} />
               <Route path="/chat" element={<Chat />} />

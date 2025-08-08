@@ -13,6 +13,7 @@ const Navbar = () => {
   const [showAboutDropdown, setShowAboutDropdown] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+<Link to="/ai-code">AI Code Generator</Link>
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,7 +59,8 @@ const Navbar = () => {
               { label: 'Products', to: '/products' },
               { label: 'Services', to: '/services' },
               { label: 'Blog', to: '/blog' },
-              { label: 'Contact', to: '/contact' }
+              { label: 'Contact', to: '/contact' },
+              { label: 'AI Code Generator', to: '/ai-code-generator' }, // ✅ Added here
             ].map((item) => (
               <Link
                 key={item.to}
@@ -173,6 +175,7 @@ const Navbar = () => {
                 { label: 'Services', to: '/services' },
                 { label: 'Blog', to: '/blog' },
                 { label: 'Contact', to: '/contact' },
+                { label: 'AI Code Generator', to: '/ai-code-generator' }, // ✅ Added here too
               ].map((item) => (
                 <Link
                   key={item.to}
