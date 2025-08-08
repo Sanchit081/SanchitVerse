@@ -9,54 +9,14 @@ import WebDevToolkitImg from '../assets/products/img2.svg';
 import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
-import Loader from './Loader'; // Import the new Loader component
 
-// FloatingDot component remains the same
-const FloatingDot = ({ delay, size, duration, startX, startY, endX, endY }) => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleClick = (e) => {
-    e.stopPropagation();
-    setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 500);
-  };
-
-  return (
-    <motion.div
-      onClick={handleClick}
-      className="absolute rounded-full cursor-pointer"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        top: `${startY}%`,
-        left: `${startX}%`,
-        backgroundColor: size > 7 ? '#7091E6' : '#8697C4',
-      }}
-      animate={{
-        x: [0, endX],
-        y: [0, endY],
-        scale: isClicked ? [1, 2, 1] : 1,
-      }}
-      transition={{
-        duration: duration,
-        repeat: Infinity,
-        repeatType: "mirror",
-        ease: "easeInOut",
-        delay: delay,
-      }}
-    />
-  );
-};
-
-// Home component with loader logic
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true); // Add this state
+  const [isLoading, setIsLoading] = useState(true);
   const [showNewsletter, setShowNewsletter] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
-  // useEffect to manage the loader and other timed effects
   useEffect(() => {
     // Hide loader after a delay
     setTimeout(() => {
@@ -81,7 +41,6 @@ const Home = () => {
     setTimeout(() => setShowToast(false), 4000);
   };
 
-  // products, blogs, trustedLogos arrays remain the same
   const products = [
     {
       id: 1,
@@ -163,7 +122,21 @@ const Home = () => {
   ];
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+        <motion.h1
+          className="text-4xl md:text-6xl font-extrabold text-[#1E1E28]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          Welcome to{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4] animate-shimmer">
+            SanchitVerse
+          </span>
+        </motion.h1>
+      </div>
+    );
   }
 
   return (
@@ -191,22 +164,6 @@ const Home = () => {
               ease: "easeInOut",
               delay: Math.random() * 5,
             }}
-          />
-        ))}
-      </div>
-
-      {/* 💫 Floating Dots Background */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
-          <FloatingDot
-            key={i}
-            delay={Math.random() * 10}
-            size={Math.random() * 10 + 3}
-            duration={20 + Math.random() * 20}
-            startX={Math.random() * 100}
-            startY={Math.random() * 100}
-            endX={Math.random() * 100}
-            endY={Math.random() * 100}
           />
         ))}
       </div>
