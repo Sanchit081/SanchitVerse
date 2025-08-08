@@ -9,7 +9,6 @@ import WebDevToolkitImg from '../assets/products/img2.svg';
 import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
-import VerseLogo from '../assets/products/verselogo.png';
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -134,39 +133,14 @@ const Home = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, delay: 2.5 }}
           >
-            <style jsx="true">{`
-              @keyframes shimmer-loader {
-                0% {
-                  background-position: -200% 0;
-                }
-                100% {
-                  background-position: 200% 0;
-                }
-              }
-              .shimmer-loader-text {
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-size: 200% 100%;
-                animation: shimmer-loader 2s infinite;
-              }
-            `}</style>
-            <motion.img
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              src={VerseLogo}
-              alt="SanchitVerse Logo"
-              className="w-20 h-20 md:w-24 md:h-24 mb-4"
-            />
             <motion.h1
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5 }}
-              className="text-4xl md:text-6xl font-extrabold text-[#1E1E28] leading-tight text-center px-4"
+              className="text-4xl md:text-6xl font-extrabold text-[#1E1E28] leading-tight"
             >
               Welcome to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4] shimmer-loader-text">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4]">
                 SanchitVerse
               </span>
             </motion.h1>
@@ -174,7 +148,7 @@ const Home = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, delay: 1 }}
-              className="mt-4 text-lg md:text-xl text-[#8697C4] text-center px-4"
+              className="mt-4 text-lg text-[#8697C4]"
             >
               Wait, your tech is being loaded...
             </motion.p>
@@ -452,96 +426,6 @@ const Home = () => {
             </div>
           </div>
         </section>
-        {/* --- */}
-        {/* Animated Graphs Section */}
-        <section className="py-24 bg-[#f8f9fa]">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-[#3D52A0]">Powerful Search Insights</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Graph 1: Trending Keywords */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md border border-gray-200"
-              >
-                <h3 className="text-xl font-semibold text-[#1E1E28] mb-4">Trending Keywords</h3>
-                <div className="relative w-full h-40 flex items-end justify-around p-2">
-                  <motion.div
-                    className="w-10 bg-gradient-to-t from-[#7091E6] to-[#3D52A0] rounded-t-lg"
-                    animate={{ height: ['20%', '80%', '20%'] }}
-                    transition={{ duration: 4, repeat: Infinity, repeatType: 'reverse' }}
-                  />
-                  <motion.div
-                    className="w-10 bg-gradient-to-t from-[#7091E6] to-[#3D52A0] rounded-t-lg"
-                    animate={{ height: ['40%', '60%', '40%'] }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse', delay: 1 }}
-                  />
-                  <motion.div
-                    className="w-10 bg-gradient-to-t from-[#7091E6] to-[#3D52A0] rounded-t-lg"
-                    animate={{ height: ['50%', '90%', '50%'] }}
-                    transition={{ duration: 5, repeat: Infinity, repeatType: 'reverse', delay: 0.5 }}
-                  />
-                </div>
-              </motion.div>
-
-              {/* Graph 2: Traffic Growth */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md border border-gray-200"
-              >
-                <h3 className="text-xl font-semibold text-[#1E1E28] mb-4">Traffic Growth</h3>
-                <div className="relative w-full h-40 flex items-end justify-around p-2">
-                  <motion.div
-                    className="w-20 h-full relative"
-                    animate={{ rotate: [0, 360] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                  >
-                    <div className="absolute inset-0 border-4 border-t-[#3D52A0] border-r-transparent border-b-transparent border-l-transparent rounded-full" />
-                    <div className="absolute inset-0 border-4 border-t-transparent border-r-[#7091E6] border-b-transparent border-l-transparent rounded-full" />
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              {/* Graph 3: User Engagement */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: true }}
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md border border-gray-200"
-              >
-                <h3 className="text-xl font-semibold text-[#1E1E28] mb-4">User Engagement</h3>
-                <div className="relative w-full h-40 flex items-end justify-around p-2">
-                  <motion.div
-                    className="w-full h-full relative flex items-end justify-between px-2"
-                  >
-                    <motion.div
-                      className="w-8 bg-gradient-to-t from-[#7091E6] to-[#3D52A0] rounded-t-lg"
-                      animate={{ height: ['10%', '60%', '10%'] }}
-                      transition={{ duration: 3.5, repeat: Infinity, repeatType: 'reverse' }}
-                    />
-                    <motion.div
-                      className="w-8 bg-gradient-to-t from-[#7091E6] to-[#3D52A0] rounded-t-lg"
-                      animate={{ height: ['30%', '80%', '30%'] }}
-                      transition={{ duration: 3.2, repeat: Infinity, repeatType: 'reverse', delay: 0.5 }}
-                    />
-                    <motion.div
-                      className="w-8 bg-gradient-to-t from-[#7091E6] to-[#3D52A0] rounded-t-lg"
-                      animate={{ height: ['20%', '70%', '20%'] }}
-                      transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse', delay: 1 }}
-                    />
-                  </motion.div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
         {/* 🎉 Newsletter & Confetti */}
         <AnimatePresence>
           {(showNewsletter || showConfetti) && (
