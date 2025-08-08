@@ -12,15 +12,17 @@ import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
 
 const Home = () => {
+  // New state for the loader page
   const [showLoader, setShowLoader] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+
   const [showNewsletter, setShowNewsletter] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [loadingProgress, setLoadingProgress] = useState(0);
 
+  // This useEffect simulates the loading progress and hides the loader
   useEffect(() => {
-    // Simulate loading for the splash screen
     const loadingInterval = setInterval(() => {
       setLoadingProgress((prev) => {
         if (prev >= 100) {
@@ -35,8 +37,8 @@ const Home = () => {
     return () => clearInterval(loadingInterval);
   }, []);
 
+  // This useEffect handles the newsletter popup, but only after the loader is gone
   useEffect(() => {
-    // Only show newsletter after the main content loads
     if (!showLoader) {
       const timer = setTimeout(() => setShowNewsletter(true), 5000);
       return () => clearTimeout(timer);
@@ -133,6 +135,34 @@ const Home = () => {
     { name: 'Apple', src: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
   ];
 
+  // New fake data for client reviews
+  const reviews = [
+    {
+      id: 1,
+      quote: "SanchitVerse's templates saved me dozens of hours on my latest project. The quality is top-notch and the code is so clean!",
+      name: "Alex Johnson",
+      title: "Senior Developer",
+    },
+    {
+      id: 2,
+      quote: "The SEO guides are a game-changer. My site's traffic has increased by 40% in just two months. Highly recommended!",
+      name: "Maria Sanchez",
+      title: "Content Strategist",
+    },
+    {
+      id: 3,
+      quote: "As a solopreneur, the AI automation tools have been a lifesaver. I can now focus on growing my business instead of repetitive tasks.",
+      name: "David Chen",
+      title: "Founder, Innovate Co.",
+    },
+    {
+      id: 4,
+      quote: "I've never seen such a well-curated collection of resources. SanchitVerse is my go-to for anything related to web development and design.",
+      name: "Sarah Lee",
+      title: "UI/UX Designer",
+    },
+  ];
+
   return (
     <div className="font-body bg-white text-[#1E1E28] relative overflow-hidden pb-28">
       {/* 🟢 Loader Page */}
@@ -144,13 +174,13 @@ const Home = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-7xl font-extrabold text-[#1E1E28] leading-tight mb-8">
+            <h1 className="text-4xl md:text-7xl font-extrabold text-[#1E1E28] leading-tight mb-8 text-center px-4">
               Welcome to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4] animate-shimmer">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4] animate-shimmer animate-glow">
                 SanchitVerse
               </span>
             </h1>
-            <p className="text-lg text-gray-600 mb-6">Your tech is loading...</p>
+            <p className="text-lg text-gray-600 mb-6 text-center px-4">Your tech is loading...</p>
             <div className="w-64 bg-gray-200 rounded-full h-2.5">
               <motion.div
                 className="bg-[#7091E6] h-2.5 rounded-full"
@@ -159,6 +189,22 @@ const Home = () => {
                 transition={{ duration: 0.5 }}
               />
             </div>
+            {/* Custom Tailwind keyframes for the glow effect */}
+            <style>
+              {`
+                @keyframes glow {
+                  0%, 100% {
+                    text-shadow: 0 0 5px rgba(112, 145, 230, 0.4), 0 0 10px rgba(112, 145, 230, 0.2);
+                  }
+                  50% {
+                    text-shadow: 0 0 10px rgba(112, 145, 230, 0.8), 0 0 20px rgba(112, 145, 230, 0.5);
+                  }
+                }
+                .animate-glow {
+                  animation: glow 2s ease-in-out infinite;
+                }
+              `}
+            </style>
           </motion.div>
         )}
       </AnimatePresence>
@@ -406,6 +452,35 @@ const Home = () => {
             </section>
 
             {/* --- */}
+            {/* ⭐ What our clients say section */}
+            <section className="py-24 bg-white text-[#1E1E28]">
+              <div className="max-w-7xl mx-auto px-4 text-center">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-[#3D52A0]">What our clients say</h2>
+                <p className="text-center text-[#555] max-w-2xl mx-auto mb-12">
+                  We're proud to have helped so many creators and businesses succeed in their digital ventures.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {reviews.map((review, index) => (
+                    <motion.div
+                      key={review.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.15, duration: 0.6 }}
+                      className="bg-white p-6 rounded-xl shadow-lg border border-[#EDE8F5] text-left"
+                    >
+                      <div className="flex items-center mb-4">
+                        <div className="text-4xl text-[#7091E6]">"</div>
+                        <div className="ml-2 text-xl font-semibold text-[#1E1E28]">{review.quote}</div>
+                      </div>
+                      <div className="text-sm text-[#3D52A0] font-bold mt-4">— {review.name}</div>
+                      <div className="text-xs text-gray-500">{review.title}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* --- */}
             {/* ✍️ Blog Section */}
             <section className="py-24 bg-white">
               <div className="max-w-6xl mx-auto px-4">
@@ -428,7 +503,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-
+            
             {/* --- */}
             {/* 🚀 CTA Section */}
             <section className="py-24 bg-white text-[#1E1E28]">
