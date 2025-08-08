@@ -10,6 +10,7 @@ import WebDevToolkitImg from '../assets/products/img2.svg';
 import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
+import NeuroChatVideo from '../assets/videos/NeuroChat.mp4'; // <-- New video import
 
 const Home = () => {
   // State for the loader page
@@ -48,7 +49,7 @@ const Home = () => {
       if (!hasAcceptedCookies) {
         setShowCookieConsent(true);
       }
-      
+
       // Start the timer for the newsletter pop-up
       const timer = setTimeout(() => setShowNewsletter(true), 5000);
       return () => clearTimeout(timer);
@@ -179,8 +180,8 @@ const Home = () => {
     },
     {
       id: 5,
-      quote: "The practical workflows are easy to follow and incredibly effective. It helped me streamline my entire creative process.",
       name: "Arjun Rao",
+      quote: "The practical workflows are easy to follow and incredibly effective. It helped me streamline my entire creative process.",
       title: "Creative Director",
     },
     {
@@ -504,6 +505,25 @@ const Home = () => {
                       <div className="text-xs text-gray-500">{review.title}</div>
                     </motion.div>
                   ))}
+                </div>
+              </div>
+            </section>
+
+            {/* --- VIDEO SECTION --- */}
+            <section className="py-24 bg-white">
+              <div className="max-w-6xl mx-auto px-4 text-center">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-[#3D52A0]">An Example of Our Products in Action</h2>
+                <div className="flex justify-center">
+                  <video
+                    src={NeuroChatVideo}
+                    className="w-full max-w-4xl rounded-2xl shadow-xl border border-[#EDE8F5]"
+                    controls
+                    autoPlay
+                    loop
+                    muted
+                  >
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
               </div>
             </section>
