@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Services from './pages/Services';
@@ -31,7 +30,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               
-              {/* Removed routes for deleted pages: AiCodeGenerator, Ask, and Chat */}
+              {/* Removed routes for deleted pages */}
 
               <Route
                 path="/admin"
