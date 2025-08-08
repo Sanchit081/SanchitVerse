@@ -7,12 +7,6 @@ const AiCodeGenerator = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Backend base URL (Render in production, localhost in dev)
-  const API_BASE =
-    import.meta.env.MODE === "development"
-      ? "http://localhost:5000"
-      : "https://sanchitverse.onrender.com";
-
   const generateCode = async () => {
     if (!prompt.trim()) return;
     setLoading(true);
@@ -20,7 +14,8 @@ const AiCodeGenerator = () => {
     setError("");
 
     try {
-      const res = await axios.post(`${API_BASE}/api/generate-code`, { prompt });
+      // Call backend instead of Hugging Face directly
+      const res = await axios.post("/api/generate-code", { prompt });
 
       if (res.data.code) {
         setResponse(res.data.code);
