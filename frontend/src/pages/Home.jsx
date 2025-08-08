@@ -10,7 +10,6 @@ import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
 
-// New FloatingDot component with corrected animation logic
 const FloatingDot = ({ delay, size, duration, startX, startY }) => {
   const [isClicked, setIsClicked] = useState(false);
 
@@ -34,10 +33,10 @@ const FloatingDot = ({ delay, size, duration, startX, startY }) => {
         opacity: 0.8
       }}
       animate={{
-        x: [0, Math.random() * 100 - 50, 0], // Move randomly between -50px and +50px
-        y: [0, Math.random() * 100 - 50, 0], // Move randomly between -50px and +50px
+        x: [0, Math.random() * 200 - 100, 0], // Larger random movement
+        y: [0, Math.random() * 200 - 100, 0], // Larger random movement
         scale: isClicked ? [1, 2, 1] : 1,
-        opacity: [0.8, 1, 0.8], // Subtle opacity change
+        opacity: [0.8, 1, 0.8],
       }}
       transition={{
         duration: duration,
@@ -181,7 +180,7 @@ const Home = () => {
       </div>
 
       {/* 💫 Floating Dots Background (Corrected) */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         {[...Array(50)].map((_, i) => (
           <FloatingDot
             key={i}
