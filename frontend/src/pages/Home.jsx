@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react'; // useMemo is imported
 import { Link } from 'react-router-dom';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { motion, AnimatePresence } from 'framer-motion';
-import Search from '../components/Search';
+// Search component import is no longer needed if handled inline
+// import Search from '../components/Search'; 
 import PartyAnim from '../assets/animations/party.json';
 import DigitalMarketingImg from '../assets/products/img1.svg';
 import WebDevToolkitImg from '../assets/products/img2.svg';
@@ -17,32 +18,7 @@ const Home = () => {
   const [showToast, setShowToast] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    // This is a simulated delay to showcase the loading animation.
-    // In a real application, you might remove this or tie it to actual data fetching.
-    // Reduced from 3000ms to 2000ms for a faster perceived load time.
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
-    // Show newsletter after a delay (can be longer than the loader)
-    const newsletterTimer = setTimeout(() => setShowNewsletter(true), 5000);
-
-    return () => {
-      clearTimeout(newsletterTimer);
-    };
-  }, []);
-
-  const handleSubscribe = () => {
-    setShowConfetti(true);
-    setShowToast(true);
-    setTimeout(() => {
-      setShowConfetti(false);
-      setShowNewsletter(false);
-    }, 2000);
-    setTimeout(() => setShowToast(false), 4000);
-  };
-
+  // --- START: Data definitions ---
   const products = [
     {
       id: 1,
@@ -113,6 +89,64 @@ const Home = () => {
       date: "May 2025",
     },
   ];
+  // --- END: Data definitions ---
+
+  // --- START: Search Logic Fix ---
+  // Combine all searchable content into a single, memoized array for performance.
+  const allContent = useMemo(() => [
+    ...products.map(p => ({
+      title: p.name,
+      snippet: p.description,
+      link: '/products', // Generic link to products page
+    })),
+    ...blogs.map(b => ({
+      title: b.title,
+      snippet: b.excerpt,
+      link: `/blog/${b.id}`, // Assumes a route like /blog/:id
+    }))
+  ], [products, blogs]);
+
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    
+    if (!query) {
+      setSearchResults([]);
+      return;
+    }
+    
+    const lowerCaseQuery = query.toLowerCase();
+    const filteredResults = allContent.filter(item =>
+      item.title.toLowerCase().includes(lowerCaseQuery) ||
+      item.snippet.toLowerCase().includes(lowerCaseQuery)
+    );
+    
+    setSearchResults(filteredResults);
+  };
+  // --- END: Search Logic Fix ---
+
+  useEffect(() => {
+    // This is a simulated delay to showcase the loading animation.
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    // Show newsletter after a delay
+    const newsletterTimer = setTimeout(() => setShowNewsletter(true), 5000);
+
+    return () => {
+      clearTimeout(newsletterTimer);
+    };
+  }, []);
+
+  const handleSubscribe = () => {
+    setShowConfetti(true);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowConfetti(false);
+      setShowNewsletter(false);
+    }, 2000);
+    setTimeout(() => setShowToast(false), 4000);
+  };
 
   const trustedLogos = [
     { name: 'Google', src: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' },
@@ -126,13 +160,11 @@ const Home = () => {
   if (isLoading) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-center px-4">
-        {/* Loading Animation */}
         <motion.div
           className="w-16 h-16 border-4 border-t-4 border-gray-200 border-t-[#7091E6] rounded-full mb-8"
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
         />
-        {/* Welcome Text */}
         <motion.h1
           className="text-4xl md:text-6xl font-extrabold text-[#1E1E28]"
           initial={{ opacity: 0 }}
@@ -144,7 +176,6 @@ const Home = () => {
             SanchitVerse
           </span>
         </motion.h1>
-        {/* Sub-text */}
         <motion.p 
           className="mt-4 text-lg text-gray-500"
           initial={{ opacity: 0 }}
@@ -159,7 +190,7 @@ const Home = () => {
 
   return (
     <div className="font-body bg-white text-[#1E1E28] relative overflow-hidden pb-28">
-      {/* 🔲 Floating Background Boxes */}
+      {/* Floating Background Boxes */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         {[...Array(10)].map((_, i) => (
           <motion.div
@@ -186,7 +217,7 @@ const Home = () => {
         ))}
       </div>
 
-      {/* 🔷 Hero Section */}
+      {/* Hero Section */}
       <section className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-4 md:px-20 pt-6 pb-10 min-h-[75vh] md:min-h-[90vh]">
         {/* Text content */}
         <motion.div
@@ -215,11 +246,24 @@ const Home = () => {
               Learn more →
             </Link>
           </div>
-          {/* Search Component */}
+          
+          {/* --- START: Search Input Field (FIXED) --- */}
           <div className="w-full mx-auto mt-8">
-            <Search onSearch={(results) => setSearchResults(results)} />
+            <div className="relative">
+              <input
+                type="search"
+                placeholder="Search for products, articles, and more..."
+                className="w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#7091E6] transition-colors"
+                onChange={handleSearchChange}
+              />
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xl">
+                🔍
+              </span>
+            </div>
           </div>
-          {/* Feature highlights (compact) */}
+          {/* --- END: Search Input Field (FIXED) --- */}
+
+          {/* Feature highlights */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
             <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm border">
               <div className="flex-shrink-0 text-2xl">🚀</div>
@@ -243,16 +287,17 @@ const Home = () => {
               </div>
             </div>
           </div>
-          {/* Search results (unchanged) */}
+          
+          {/* Search results */}
           {searchResults.length > 0 && (
             <div className="w-full mt-6 bg-white border border-gray-200 rounded-xl shadow-md p-6 overflow-x-auto">
               <h3 className="text-2xl font-bold mb-4 text-[#3D52A0]">Search Results:</h3>
               <ul className="space-y-4">
                 {searchResults.map((item, idx) => (
-                  <li key={idx} className="border-b pb-4">
-                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-lg font-semibold text-[#1E1E28] hover:underline">
+                  <li key={idx} className="border-b pb-4 last:border-b-0">
+                    <Link to={item.link} className="text-lg font-semibold text-[#1E1E28] hover:underline">
                       {item.title}
-                    </a>
+                    </Link>
                     <p className="text-sm text-gray-600 mt-1">{item.snippet}</p>
                   </li>
                 ))}
@@ -279,6 +324,9 @@ const Home = () => {
           />
         </motion.div>
       </section>
+      
+      {/* All other sections remain unchanged... */}
+
       {/* 🛒 Products Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
@@ -330,7 +378,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* 👥 Why SanchitVerse? Section (formerly info card) */}
+
+      {/* 👥 Why SanchitVerse? Section */}
       <section className="py-24 bg-white text-[#1E1E28]">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-[#3D52A0]">Why SanchitVerse?</h2>
@@ -356,7 +405,7 @@ const Home = () => {
           </Link>
         </div>
       </section>
-      {/* --- */}
+
       {/* 👥 Trusted by Creators Section */}
       <section className="py-24 bg-white text-[#1E1E28]">
         <div className="max-w-6xl mx-auto px-4 text-center">
@@ -381,7 +430,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* --- */}
+
       {/* ✍️ Blog Section */}
       <section className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4">
@@ -405,7 +454,6 @@ const Home = () => {
         </div>
       </section>
       
-      {/* --- */}
       {/* 🚀 CTA Section */}
       <section className="py-24 bg-white text-[#1E1E28]">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 px-4">
@@ -424,6 +472,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       {/* 🎉 Newsletter & Confetti */}
       <AnimatePresence>
         {(showNewsletter || showConfetti) && (
@@ -461,6 +510,7 @@ const Home = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
       {/* 🔔 Toast */}
       {showToast && (
         <motion.div
