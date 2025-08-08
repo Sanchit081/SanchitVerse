@@ -36,24 +36,27 @@ const Home = () => {
     {
       id: 1,
       name: "Digital Marketing Mastery",
-      price: "$99",
+      price: "Launching Soon",
       description: "Guide to digital marketing strategies and tools.",
       image: DigitalMarketingImg,
+      comingSoon: true,
     },
     {
       id: 2,
       name: "Web Dev Toolkit",
-      price: "$149",
+      price: "Launching Soon",
       description: "Collection of dev resources and templates.",
       image: WebDevToolkitImg,
       highlight: true,
+      comingSoon: true,
     },
     {
       id: 3,
       name: "SEO Guide 2024",
-      price: "$79",
+      price: "Launching Soon",
       description: "Advanced SEO strategies for professionals.",
       image: SEOGuideImg,
+      comingSoon: true,
     },
     {
       id: 4,
@@ -213,18 +216,16 @@ const Home = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.15, duration: 0.6 }}
-                className={`relative bg-[#FCFCFD] rounded-2xl shadow-lg transition-shadow p-6 border border-[#EDE8F5] hover:-translate-y-2 duration-300 text-center ${product.comingSoon ? 'opacity-70' : ''}`}
+                className="relative bg-[#FCFCFD] rounded-2xl shadow-lg transition-shadow p-6 border border-[#EDE8F5] hover:-translate-y-2 duration-300 text-center opacity-70"
               >
                 {product.highlight && (
                   <span className="absolute top-4 right-4 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                     Most Selling
                   </span>
                 )}
-                {product.comingSoon && (
-                  <span className="absolute top-4 right-4 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                    Coming Soon
-                  </span>
-                )}
+                <span className="absolute top-4 left-4 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                  Launching Soon
+                </span>
                 <img src={product.image} alt={product.name} className="h-28 w-28 object-contain drop-shadow-lg mx-auto mb-6" />
                 <h3 className="text-xl font-semibold text-[#1E1E28]">{product.name}</h3>
                 <p className="text-sm text-[#555] mt-2 mb-4">{product.description}</p>
