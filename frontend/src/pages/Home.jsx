@@ -103,6 +103,15 @@ const Home = () => {
     },
   ];
 
+  const trustedLogos = [
+    { name: 'Google', src: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' },
+    { name: 'Microsoft', src: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' },
+    { name: 'Amazon', src: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg' },
+    { name: 'Netflix', src: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg' },
+    { name: 'Spotify', src: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg' },
+    { name: 'Apple', src: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
+  ];
+
   return (
     <div className="font-body bg-white text-[#1E1E28] relative overflow-hidden pb-28">
       {/* 🔲 Floating Background Boxes */}
@@ -142,8 +151,9 @@ const Home = () => {
           className="flex-1 text-left w-full"
         >
           <h1 className="text-3xl md:text-5xl font-extrabold text-[#1E1E28] leading-tight">
+            Welcome to{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4] animate-shimmer">
-              Welcome to SanchitVerse
+              SanchitVerse
             </span>
           </h1>
           <p className="text-[#8697C4] mt-4 max-w-md sm:max-w-lg text-lg">
@@ -212,7 +222,7 @@ const Home = () => {
           )}
         </motion.div>
 
-        {/* Animation + quick info card */}
+        {/* Animation */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -229,30 +239,6 @@ const Home = () => {
               maxWidth: '520px'
             }}
           />
-
-          {/* Desktop info card that fills the empty space next to illustration */}
-          <div className="hidden md:block absolute right-[-3rem] top-20 w-72 bg-white rounded-2xl shadow-xl border p-5">
-            <h4 className="text-sm font-semibold text-[#1E1E28]">Why SanchitVerse?</h4>
-            <ul className="mt-3 text-sm text-gray-600 space-y-2">
-              <li>• Curated templates & code snippets</li>
-              <li>• Time-saving automation tools</li>
-              <li>• Practical guides & proven workflows</li>
-            </ul>
-            <Link to="/products" className="inline-block mt-4 text-sm font-semibold text-[#7091E6] hover:underline">
-              Explore products →
-            </Link>
-          </div>
-
-          {/* Mobile info row (under animation) */}
-          <div className="md:hidden mt-6 w-full px-4">
-            <div className="bg-white p-4 rounded-lg shadow-sm border flex items-center justify-between">
-              <div>
-                <div className="text-sm font-semibold">Trusted by creators</div>
-                <div className="text-xs text-gray-500">3,000+ community members</div>
-              </div>
-              <Link to="/products" className="text-sm text-[#7091E6] hover:underline">Explore</Link>
-            </div>
-          </div>
         </motion.div>
       </section>
 
@@ -311,23 +297,55 @@ const Home = () => {
         </div>
       </section>
 
+      {/* 👥 Why SanchitVerse? Section (formerly info card) */}
+      <section className="py-24 bg-white text-[#1E1E28]">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-[#3D52A0]">Why SanchitVerse?</h2>
+          <p className="text-[#555] max-w-2xl mx-auto mb-8">
+            We provide the tools and resources you need to succeed in your digital ventures.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white p-6 rounded-xl shadow-lg border border-[#EDE8F5]">
+              <h3 className="font-semibold text-lg text-[#1E1E28]">Curated templates & code snippets</h3>
+              <p className="mt-2 text-sm text-gray-600">Save time with our collection of high-quality, ready-to-use resources.</p>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white p-6 rounded-xl shadow-lg border border-[#EDE8F5]">
+              <h3 className="font-semibold text-lg text-[#1E1E28]">Time-saving automation tools</h3>
+              <p className="mt-2 text-sm text-gray-600">Automate repetitive tasks and focus on what matters most to your business.</p>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white p-6 rounded-xl shadow-lg border border-[#EDE8F5]">
+              <h3 className="font-semibold text-lg text-[#1E1E28]">Practical guides & proven workflows</h3>
+              <p className="mt-2 text-sm text-gray-600">Learn from our practical, step-by-step guides and proven strategies.</p>
+            </motion.div>
+          </div>
+          <Link to="/products" className="inline-block mt-8 text-sm font-semibold text-[#7091E6] hover:underline">
+            Explore all our resources →
+          </Link>
+        </div>
+      </section>
+
       {/* --- */}
       {/* 👥 Trusted by Creators Section */}
       <section className="py-24 bg-white text-[#1E1E28]">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Trusted by thousands of creators</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Loved by creators at...</h2>
           <p className="text-[#555] max-w-2xl mx-auto mb-8">
             Our community is growing fast! Join over 3,000 developers, designers, and entrepreneurs who are building and learning with SanchitVerse.
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 mt-12">
-            {/* Replace with actual logos/avatars later */}
-            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">A</div>
-            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">B</div>
-            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">C</div>
-            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">D</div>
-            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">E</div>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 mt-12">
+            {trustedLogos.map((logo, index) => (
+              <motion.img
+                key={index}
+                src={logo.src}
+                alt={`${logo.name} logo`}
+                className="h-8 md:h-10 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+              />
+            ))}
           </div>
-          <p className="mt-8 text-sm text-gray-500">...and many more!</p>
         </div>
       </section>
 
