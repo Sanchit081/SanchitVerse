@@ -12,9 +12,12 @@ import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
 
 const Home = () => {
-  // New state for the loader page
+  // State for the loader page
   const [showLoader, setShowLoader] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
+
+  // New state for the cookie consent pop-up
+  const [showCookieConsent, setShowCookieConsent] = useState(false);
 
   const [showNewsletter, setShowNewsletter] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -37,13 +40,26 @@ const Home = () => {
     return () => clearInterval(loadingInterval);
   }, []);
 
-  // This useEffect handles the newsletter popup, but only after the loader is gone
+  // This useEffect handles the cookie consent and newsletter pop-ups after the main content loads
   useEffect(() => {
     if (!showLoader) {
+      // Check if cookie consent has been given before showing the pop-up
+      const hasAcceptedCookies = localStorage.getItem('cookie_consent');
+      if (!hasAcceptedCookies) {
+        setShowCookieConsent(true);
+      }
+      
+      // Start the timer for the newsletter pop-up
       const timer = setTimeout(() => setShowNewsletter(true), 5000);
       return () => clearTimeout(timer);
     }
   }, [showLoader]);
+
+  // Function to handle the cookie consent action
+  const handleCookieConsent = (consent) => {
+    localStorage.setItem('cookie_consent', consent);
+    setShowCookieConsent(false);
+  };
 
   const handleSubscribe = () => {
     setShowConfetti(true);
@@ -135,31 +151,43 @@ const Home = () => {
     { name: 'Apple', src: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
   ];
 
-  // New fake data for client reviews
+  // Updated fake data for client reviews with Indian names
   const reviews = [
     {
       id: 1,
       quote: "SanchitVerse's templates saved me dozens of hours on my latest project. The quality is top-notch and the code is so clean!",
-      name: "Alex Johnson",
+      name: "Aarav Sharma",
       title: "Senior Developer",
     },
     {
       id: 2,
       quote: "The SEO guides are a game-changer. My site's traffic has increased by 40% in just two months. Highly recommended!",
-      name: "Maria Sanchez",
+      name: "Priya Singh",
       title: "Content Strategist",
     },
     {
       id: 3,
       quote: "As a solopreneur, the AI automation tools have been a lifesaver. I can now focus on growing my business instead of repetitive tasks.",
-      name: "David Chen",
+      name: "Rohan Gupta",
       title: "Founder, Innovate Co.",
     },
     {
       id: 4,
       quote: "I've never seen such a well-curated collection of resources. SanchitVerse is my go-to for anything related to web development and design.",
-      name: "Sarah Lee",
+      name: "Isha Patel",
       title: "UI/UX Designer",
+    },
+    {
+      id: 5,
+      quote: "The practical workflows are easy to follow and incredibly effective. It helped me streamline my entire creative process.",
+      name: "Arjun Rao",
+      title: "Creative Director",
+    },
+    {
+      id: 6,
+      quote: "SanchitVerse offers a fresh perspective on digital tools. The insights and templates are exactly what a startup needs to get a head start.",
+      name: "Sneha Reddy",
+      title: "Startup Co-founder",
     },
   ];
 
@@ -558,6 +586,39 @@ const Home = () => {
                         <button onClick={handleSubscribe} className="w-full bg-[#7091E6] hover:bg-[#3D52A0] text-white text-sm px-4 py-2 rounded-md">Subscribe</button>
                       </motion.div>
                     )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* 🍪 Cookie Consent Pop-up */}
+            <AnimatePresence>
+              {showCookieConsent && (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.5 }}
+                  className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 bg-white border-t border-gray-200 shadow-lg"
+                >
+                  <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p className="text-sm text-gray-700 flex-1 text-center md:text-left">
+                      We use cookies to ensure you get the best experience on our website. By continuing to use this site, you agree to our use of cookies.
+                    </p>
+                    <div className="flex gap-3 justify-center w-full md:w-auto">
+                      <button
+                        onClick={() => handleCookieConsent('accepted')}
+                        className="px-4 py-2 bg-[#7091E6] text-white rounded-lg font-semibold hover:bg-[#3D52A0] transition-all text-sm w-full md:w-auto"
+                      >
+                        Accept All
+                      </button>
+                      <button
+                        onClick={() => handleCookieConsent('declined')}
+                        className="px-4 py-2 bg-transparent border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all text-sm w-full md:w-auto"
+                      >
+                        Decline
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               )}
