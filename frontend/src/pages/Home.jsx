@@ -9,6 +9,47 @@ import WebDevToolkitImg from '../assets/products/img2.svg';
 import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
+import VerseLogo from '../assets/products/verselogo.png';
+
+// Floating dots component for the "We Grow With You" section
+const FloatingDot = ({ delay, size, duration, startX, startY }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 500); 
+  };
+
+  return (
+    <motion.div
+      onClick={handleClick}
+      className="absolute rounded-full cursor-pointer"
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        top: `${startY}%`,
+        left: `${startX}%`,
+        backgroundColor: size > 7 ? '#7091E6' : '#8697C4',
+        opacity: 0.8,
+        zIndex: 10,
+      }}
+      animate={{
+        x: [0, Math.random() * 100 - 50, 0],
+        y: [0, Math.random() * 100 - 50, 0],
+        scale: isClicked ? [1, 2, 1] : 1,
+        opacity: [0.8, 1, 0.8],
+      }}
+      transition={{
+        duration: duration,
+        repeat: Infinity,
+        repeatType: "mirror",
+        ease: "easeInOut",
+        delay: delay,
+      }}
+    />
+  );
+};
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,6 +57,8 @@ const Home = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [email, setEmail] = useState('');
 
   // This useEffect handles the loading screen and the newsletter popup
   useEffect(() => {
@@ -31,15 +74,19 @@ const Home = () => {
       clearTimeout(newsletterTimer);
     };
   }, []);
-
-  const handleSubscribe = () => {
-    setShowConfetti(true);
-    setShowToast(true);
-    setTimeout(() => {
-      setShowConfetti(false);
-      setShowNewsletter(false);
-    }, 2000);
-    setTimeout(() => setShowToast(false), 4000);
+  
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (email) {
+      setIsSubscribed(true);
+      setShowConfetti(true);
+      setShowToast(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+        setShowNewsletter(false);
+      }, 2000);
+      setTimeout(() => setShowToast(false), 4000);
+    }
   };
 
   const products = [
@@ -133,14 +180,39 @@ const Home = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, delay: 2.5 }}
           >
+            <style jsx="true">{`
+              @keyframes shimmer-loader {
+                0% {
+                  background-position: -200% 0;
+                }
+                100% {
+                  background-position: 200% 0;
+                }
+              }
+              .shimmer-loader-text {
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-size: 200% 100%;
+                animation: shimmer-loader 2s infinite;
+              }
+            `}</style>
+            <motion.img
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              src={VerseLogo}
+              alt="SanchitVerse Logo"
+              className="w-20 h-20 md:w-24 md:h-24 mb-4"
+            />
             <motion.h1
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5 }}
-              className="text-4xl md:text-6xl font-extrabold text-[#1E1E28] leading-tight"
+              className="text-4xl md:text-6xl font-extrabold text-[#1E1E28] leading-tight text-center px-4"
             >
               Welcome to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4] shimmer-loader-text">
                 SanchitVerse
               </span>
             </motion.h1>
@@ -148,7 +220,7 @@ const Home = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, delay: 1 }}
-              className="mt-4 text-lg text-[#8697C4]"
+              className="mt-4 text-lg md:text-xl text-[#8697C4] text-center px-4"
             >
               Wait, your tech is being loaded...
             </motion.p>
@@ -479,5 +551,4 @@ const Home = () => {
     </>
   );
 };
-
-export default Home;
+export default Home; 
