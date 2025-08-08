@@ -9,14 +9,16 @@ import WebDevToolkitImg from '../assets/products/img2.svg';
 import SEOGuideImg from '../assets/products/img3.svg';
 import ComputerAnim from '../assets/animations/student.json';
 import JourneyIllustration from '../assets/products/growth.svg';
+import Loader from './Loader'; // Import the new Loader component
 
+// FloatingDot component remains the same
 const FloatingDot = ({ delay, size, duration, startX, startY, endX, endY }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = (e) => {
-    e.stopPropagation(); // Prevents the click from bubbling up
+    e.stopPropagation();
     setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 500); // Reset after 500ms
+    setTimeout(() => setIsClicked(false), 500);
   };
 
   return (
@@ -28,7 +30,7 @@ const FloatingDot = ({ delay, size, duration, startX, startY, endX, endY }) => {
         height: `${size}px`,
         top: `${startY}%`,
         left: `${startX}%`,
-        backgroundColor: size > 7 ? '#7091E6' : '#8697C4', // Larger dots get a different color
+        backgroundColor: size > 7 ? '#7091E6' : '#8697C4',
       }}
       animate={{
         x: [0, endX],
@@ -46,15 +48,27 @@ const FloatingDot = ({ delay, size, duration, startX, startY, endX, endY }) => {
   );
 };
 
+// Home component with loader logic
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(true); // Add this state
   const [showNewsletter, setShowNewsletter] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
+  // useEffect to manage the loader and other timed effects
   useEffect(() => {
-    const timer = setTimeout(() => setShowNewsletter(true), 5000);
-    return () => clearTimeout(timer);
+    // Hide loader after a delay
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3-second delay for the loader
+
+    // Show newsletter after a delay (can be longer than the loader)
+    const newsletterTimer = setTimeout(() => setShowNewsletter(true), 5000);
+
+    return () => {
+      clearTimeout(newsletterTimer);
+    };
   }, []);
 
   const handleSubscribe = () => {
@@ -67,6 +81,7 @@ const Home = () => {
     setTimeout(() => setShowToast(false), 4000);
   };
 
+  // products, blogs, trustedLogos arrays remain the same
   const products = [
     {
       id: 1,
@@ -147,6 +162,10 @@ const Home = () => {
     { name: 'Apple', src: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
   ];
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="font-body bg-white text-[#1E1E28] relative overflow-hidden pb-28">
       {/* 🔲 Floating Background Boxes */}
@@ -182,8 +201,8 @@ const Home = () => {
           <FloatingDot
             key={i}
             delay={Math.random() * 10}
-            size={Math.random() * 10 + 3} // Size between 3 and 13
-            duration={20 + Math.random() * 20} // Duration between 20s and 40s
+            size={Math.random() * 10 + 3}
+            duration={20 + Math.random() * 20}
             startX={Math.random() * 100}
             startY={Math.random() * 100}
             endX={Math.random() * 100}
