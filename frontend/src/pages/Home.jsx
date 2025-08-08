@@ -18,10 +18,12 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    // Hide loader after a delay
+    // This is a simulated delay to showcase the loading animation.
+    // In a real application, you might remove this or tie it to actual data fetching.
+    // Reduced from 3000ms to 2000ms for a faster perceived load time.
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // 3-second delay for the loader
+    }, 2000);
 
     // Show newsletter after a delay (can be longer than the loader)
     const newsletterTimer = setTimeout(() => setShowNewsletter(true), 5000);
@@ -123,7 +125,14 @@ const Home = () => {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-center px-4">
+        {/* Loading Animation */}
+        <motion.div
+          className="w-16 h-16 border-4 border-t-4 border-gray-200 border-t-[#7091E6] rounded-full mb-8"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
+        {/* Welcome Text */}
         <motion.h1
           className="text-4xl md:text-6xl font-extrabold text-[#1E1E28]"
           initial={{ opacity: 0 }}
@@ -135,6 +144,15 @@ const Home = () => {
             SanchitVerse
           </span>
         </motion.h1>
+        {/* Sub-text */}
+        <motion.p 
+          className="mt-4 text-lg text-gray-500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          Your tech is loading...
+        </motion.p>
       </div>
     );
   }
@@ -289,6 +307,7 @@ const Home = () => {
                   src={product.image}
                   alt={product.name}
                   className="h-20 w-20 sm:h-28 sm:w-28 object-contain drop-shadow-lg mx-auto mb-6"
+                  loading="lazy"
                 />
                 <h3 className="text-xl font-semibold text-[#1E1E28]">{product.name}</h3>
                 <p className="text-sm text-[#555] mt-2 mb-4">{product.description}</p>
@@ -356,6 +375,7 @@ const Home = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
+                loading="lazy"
               />
             ))}
           </div>
@@ -400,7 +420,7 @@ const Home = () => {
             </Link>
           </div>
           <div className="flex-1 flex justify-center">
-            <img src={JourneyIllustration} alt="Digital Journey Illustration" className="w-full max-w-sm" />
+            <img src={JourneyIllustration} alt="Digital Journey Illustration" className="w-full max-w-sm" loading="lazy" />
           </div>
         </div>
       </section>
