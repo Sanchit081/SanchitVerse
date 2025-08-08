@@ -44,23 +44,31 @@ app.post('/api/generate-code', async (req, res) => {
         );
 
         const data = await response.json();
-        console.log("HF raw response:", data); // ✅ Log Hugging Face's response
+        console.log("HF raw response:", data); // ✅ See actual Hugging Face output in Render logs
 
-        if (data.error) {
-            return res.status(500).json({
+        if (!response.ok) {
+            return res.status(response.status).json({
                 error: 'Hugging Face API error',
-                details: data.error
+                status: response.status,
+                details: data,
             });
         }
 
-        res.json({
-            code: Array.isArray(data) && data[0]?.generated_text
-                ? data[0].generated_text
-                : 'No code generated.',
-        });
+        if (!Array.isArray(data) || !data[0]?.generated_text) {
+            return res.status(500).json({
+                error: 'No code generated from Hugging Face',
+                details: data
+            });
+        }
+
+        res.json({ code: data[0].generated_text });
+
     } catch (error) {
-        console.error("Server error:", error);
-        res.status(500).json({ error: 'Error generating code' });
+        console.error("Server error:", error); // ✅ Log full error
+        res.status(500).json({
+            error: 'Error generating code',
+            details: error.message || error
+        });
     }
 });
 
