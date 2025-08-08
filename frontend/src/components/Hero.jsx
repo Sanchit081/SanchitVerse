@@ -4,55 +4,38 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
-    <section className="relative bg-black text-white overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 flex flex-col md:flex-row items-center justify-between gap-12">
-        
-        {/* Left Side: Text */}
+    <section className="relative bg-white text-productivityBlueDark">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="md:w-1/2 text-center md:text-left"
+          className="text-center"
         >
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
-            The world's most widely adopted 
-            <span className="text-[#B4FF00]"> AI </span> 
-            developer tool
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Welcome to{' '}
+            <span className="bg-gradient-to-r from-productivityBlueLight via-productivityBlue to-productivityBlueDark bg-clip-text text-transparent">
+              SanchitVerse
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-400 mb-8 max-w-lg">
-            Premium digital products, expert insights, and transformative services designed to elevate your digital journey.
+          <p className="text-xl md:text-2xl text-productivityBlueLight mb-8 max-w-3xl mx-auto">
+            Premium digital products, expert insights, and transformative services designed to elevate your digital journey
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/products"
-              className="bg-[#B4FF00] text-black px-8 py-3 rounded-lg font-semibold hover:opacity-80 transition"
+              className="bg-productivityBlueLight text-productivityBlueDark px-8 py-3 rounded-lg font-semibold hover:bg-productivityBlue transition-colors"
             >
-              ⚡ Start Generating Code
+              Explore Products
             </Link>
             <Link
               to="/contact"
-              className="border-2 border-[#B4FF00] text-[#B4FF00] px-8 py-3 rounded-lg font-semibold hover:bg-[#B4FF00] hover:text-black transition"
+              className="border-2 border-productivityBlueLight text-productivityBlueLight px-8 py-3 rounded-lg font-semibold hover:bg-productivityBlueLight hover:text-productivityBlueDark transition-colors"
             >
               Get in Touch
             </Link>
           </div>
         </motion.div>
-
-        {/* Right Side: Rotating Orbit */}
-        <div className="md:w-1/2 flex justify-center relative">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-            className="relative w-64 h-64 border-2 border-[#B4FF00] rounded-full flex items-center justify-center"
-          >
-            {/* Dots */}
-            <div className="absolute w-4 h-4 bg-[#B4FF00] rounded-full top-0 shadow-lg shadow-[#B4FF00]" />
-            <div className="absolute w-4 h-4 bg-[#B4FF00] rounded-full bottom-0 shadow-lg shadow-[#B4FF00]" />
-            <div className="absolute w-4 h-4 bg-[#B4FF00] rounded-full left-0 shadow-lg shadow-[#B4FF00]" />
-            <div className="absolute w-4 h-4 bg-[#B4FF00] rounded-full right-0 shadow-lg shadow-[#B4FF00]" />
-          </motion.div>
-        </div>
-
       </div>
     </section>
   );
