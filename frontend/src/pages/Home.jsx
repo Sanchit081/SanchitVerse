@@ -133,7 +133,7 @@ const Home = () => {
       </div>
 
       {/* 🔷 Hero Section */}
-      <section className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-4 md:px-20 pt-6 pb-10 min-h-[90vh]">
+      <section className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-4 md:px-20 pt-6 pb-10 min-h-[75vh] md:min-h-[90vh]">
         {/* Text content */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -141,97 +141,162 @@ const Home = () => {
           transition={{ duration: 0.7 }}
           className="flex-1 text-left w-full"
         >
-          <h1 className="text-2xl md:text-5xl font-medium text-[#7091E6]">Welcome to</h1>
-          <motion.h2
-            className="text-5xl sm:text-6xl md:text-8xl font-extrabold mt-2 bg-gradient-to-r from-[#3D52A0] via-[#7091E6] to-[#1E1E28] bg-clip-text text-transparent bg-[length:200%_200%] leading-[1.1]"
-            animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-          >
-            SanchitVerse
-          </motion.h2>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-[#1E1E28] leading-tight">Level Up Your Digital Journey</h1>
+          <p className="text-[#8697C4] mt-4 max-w-md sm:max-w-lg text-lg">
+            Join thousands of creators, developers, and learners using <strong className="text-[#3D52A0]">SanchitVerse</strong> to stay ahead of the curve.
+          </p>
+          <p className="text-[#8697C4] mt-3 max-w-md sm:max-w-lg">We bring you tools, templates, and insights — all in one place.</p>
 
-          <p className="text-[#8697C4] mt-6 max-w-md sm:max-w-lg">Where productivity meets creativity. Explore tools, templates, and tips to unlock your digital potential.</p>
-
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 mt-6">
             <Link to="/products">
-              <button className="mt-6 px-6 py-3 bg-[#7091E6] text-white rounded-lg font-semibold hover:bg-[#3D52A0] transition-all shadow-lg">
+              <button className="mt-4 sm:mt-6 px-6 py-3 bg-[#7091E6] text-white rounded-lg font-semibold hover:bg-[#3D52A0] transition-all shadow-lg">
                 Explore Now
               </button>
             </Link>
+            <Link to="/contact" className="mt-3 sm:mt-6 inline-flex items-center text-sm text-[#3D52A0] hover:underline">
+              Learn more → 
+            </Link>
+          </div>
 
-            {/* 🔍 Search Component */}
-            <div className="w-full mx-auto mt-10">
-              <Search onSearch={(results) => setSearchResults(results)} />
+          {/* Search Component */}
+          <div className="w-full mx-auto mt-8">
+            <Search onSearch={(results) => setSearchResults(results)} />
+          </div>
+
+          {/* Feature highlights (compact) */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+            <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm border">
+              <div className="flex-shrink-0 text-2xl">🚀</div>
+              <div>
+                <div className="text-sm font-semibold">Launch-ready templates</div>
+                <div className="text-xs text-gray-500">Plug-and-play UI kits & pages</div>
+              </div>
             </div>
 
-            {/* 🔎 Search Results */}
-            {searchResults.length > 0 && (
-              <div className="w-full mt-6 bg-white border border-gray-200 rounded-xl shadow-md p-6 overflow-x-auto">
-                <h3 className="text-2xl font-bold mb-4 text-[#3D52A0]">Search Results:</h3>
-                <ul className="space-y-4">
-                  {searchResults.map((item, idx) => (
-                    <li key={idx} className="border-b pb-4">
-                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-lg font-semibold text-[#1E1E28] hover:underline">
-                        {item.title}
-                      </a>
-                      <p className="text-sm text-gray-600 mt-1">{item.snippet}</p>
-                    </li>
-                  ))}
-                </ul>
+            <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm border">
+              <div className="flex-shrink-0 text-2xl">⚡</div>
+              <div>
+                <div className="text-sm font-semibold">AI productivity tools</div>
+                <div className="text-xs text-gray-500">Automation scripts to save hours</div>
               </div>
-            )}
+            </div>
+
+            <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm border">
+              <div className="flex-shrink-0 text-2xl">📚</div>
+              <div>
+                <div className="text-sm font-semibold">Actionable guides</div>
+                <div className="text-xs text-gray-500">Short, practical tutorials</div>
+              </div>
+            </div>
           </div>
+
+          {/* Search results (unchanged) */}
+          {searchResults.length > 0 && (
+            <div className="w-full mt-6 bg-white border border-gray-200 rounded-xl shadow-md p-6 overflow-x-auto">
+              <h3 className="text-2xl font-bold mb-4 text-[#3D52A0]">Search Results:</h3>
+              <ul className="space-y-4">
+                {searchResults.map((item, idx) => (
+                  <li key={idx} className="border-b pb-4">
+                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-lg font-semibold text-[#1E1E28] hover:underline">
+                      {item.title}
+                    </a>
+                    <p className="text-sm text-gray-600 mt-1">{item.snippet}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </motion.div>
 
-        {/* Animation */}
+        {/* Animation + quick info card */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7 }}
-          className="flex-1 flex justify-center items-center w-full"
+          className="flex-1 flex justify-center items-center w-full relative"
         >
           <Player
             autoplay
             loop
             src={ComputerAnim}
             style={{
-              height: window.innerWidth < 768 ? '300px' : '500px',
+              height: window.innerWidth < 768 ? '300px' : '520px',
               width: '100%',
-              maxWidth: '500px'
+              maxWidth: '520px'
             }}
           />
+
+          {/* Desktop info card that fills the empty space next to illustration */}
+          <div className="hidden md:block absolute right-[-3rem] top-20 w-72 bg-white rounded-2xl shadow-xl border p-5">
+            <h4 className="text-sm font-semibold text-[#1E1E28]">Why SanchitVerse?</h4>
+            <ul className="mt-3 text-sm text-gray-600 space-y-2">
+              <li>• Curated templates & code snippets</li>
+              <li>• Time-saving automation tools</li>
+              <li>• Practical guides & proven workflows</li>
+            </ul>
+            <Link to="/products" className="inline-block mt-4 text-sm font-semibold text-[#7091E6] hover:underline">
+              Explore products →
+            </Link>
+          </div>
+
+          {/* Mobile info row (under animation) */}
+          <div className="md:hidden mt-6 w-full px-4">
+            <div className="bg-white p-4 rounded-lg shadow-sm border flex items-center justify-between">
+              <div>
+                <div className="text-sm font-semibold">Trusted by creators</div>
+                <div className="text-xs text-gray-500">3,000+ community members</div>
+              </div>
+              <Link to="/products" className="text-sm text-[#7091E6] hover:underline">Explore</Link>
+            </div>
+          </div>
         </motion.div>
       </section>
 
       {/* 🛒 Products Section */}
-      <section className="py-24 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <motion.h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 text-[#3D52A0]">Featured Products</motion.h2>
-          <p className="text-center text-[#8697C4] mb-16 text-lg">Explore curated tools crafted for creators, students & solopreneurs 🚀</p>
+          <p className="text-center text-[#8697C4] mb-12 text-lg">Explore curated tools crafted for creators, students & solopreneurs 🚀</p>
 
-          <div className="grid gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.15, duration: 0.6 }}
-                className="relative bg-[#FCFCFD] rounded-2xl shadow-lg transition-shadow p-6 border border-[#EDE8F5] hover:-translate-y-2 duration-300 text-center opacity-70"
+                transition={{ delay: index * 0.12, duration: 0.55 }}
+                className="relative bg-[#FCFCFD] rounded-2xl shadow-lg transition-shadow p-6 border border-[#EDE8F5] hover:-translate-y-2 duration-300 text-center"
               >
+                {/* Keep most-selling on right when present */}
                 {product.highlight && (
                   <span className="absolute top-4 right-4 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                     Most Selling
                   </span>
                 )}
+
+                {/* ALWAYS show launching soon badge on every product */}
                 <span className="absolute top-4 left-4 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                   Launching Soon
                 </span>
-                <img src={product.image} alt={product.name} className="h-28 w-28 object-contain drop-shadow-lg mx-auto mb-6" />
+
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-20 w-20 sm:h-28 sm:w-28 object-contain drop-shadow-lg mx-auto mb-6"
+                />
                 <h3 className="text-xl font-semibold text-[#1E1E28]">{product.name}</h3>
                 <p className="text-sm text-[#555] mt-2 mb-4">{product.description}</p>
-                <div className="text-center text-[#3D52A0] font-extrabold text-xl">{product.price}</div>
+                <div className="text-center text-[#3D52A0] font-extrabold text-lg">{product.price}</div>
               </motion.div>
             ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link to="/products">
+              <button className="px-6 py-3 bg-transparent border border-[#E6E9F2] rounded-lg text-[#3D52A0] hover:bg-[#F7F9FF] transition">
+                View all products
+              </button>
+            </Link>
           </div>
         </div>
       </section>
