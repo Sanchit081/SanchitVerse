@@ -141,7 +141,11 @@ const Home = () => {
           transition={{ duration: 0.7 }}
           className="flex-1 text-left w-full"
         >
-          <h1 className="text-3xl md:text-5xl font-extrabold text-[#1E1E28] leading-tight">Level Up Your Digital Journey</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-[#1E1E28] leading-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#8697C4] animate-shimmer">
+              Welcome to SanchitVerse
+            </span>
+          </h1>
           <p className="text-[#8697C4] mt-4 max-w-md sm:max-w-lg text-lg">
             Join thousands of creators, developers, and learners using <strong className="text-[#3D52A0]">SanchitVerse</strong> to stay ahead of the curve.
           </p>
@@ -154,7 +158,7 @@ const Home = () => {
               </button>
             </Link>
             <Link to="/contact" className="mt-3 sm:mt-6 inline-flex items-center text-sm text-[#3D52A0] hover:underline">
-              Learn more → 
+              Learn more →
             </Link>
           </div>
 
@@ -267,17 +271,17 @@ const Home = () => {
                 transition={{ delay: index * 0.12, duration: 0.55 }}
                 className="relative bg-[#FCFCFD] rounded-2xl shadow-lg transition-shadow p-6 border border-[#EDE8F5] hover:-translate-y-2 duration-300 text-center"
               >
-                {/* Keep most-selling on right when present */}
                 {product.highlight && (
                   <span className="absolute top-4 right-4 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                     Most Selling
                   </span>
                 )}
 
-                {/* ALWAYS show launching soon badge on every product */}
-                <span className="absolute top-4 left-4 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                  Launching Soon
-                </span>
+                {product.comingSoon && (
+                  <span className="absolute top-4 left-4 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                    Launching Soon
+                  </span>
+                )}
 
                 <img
                   src={product.image}
@@ -287,6 +291,12 @@ const Home = () => {
                 <h3 className="text-xl font-semibold text-[#1E1E28]">{product.name}</h3>
                 <p className="text-sm text-[#555] mt-2 mb-4">{product.description}</p>
                 <div className="text-center text-[#3D52A0] font-extrabold text-lg">{product.price}</div>
+                <form className="mt-4 flex flex-col items-center">
+                  <input type="email" placeholder="Get notified when we launch!" className="w-full px-3 py-2 border rounded-md mb-2 text-sm" />
+                  <button type="submit" className="w-full bg-[#7091E6] hover:bg-[#3D52A0] text-white text-sm px-4 py-2 rounded-md">
+                    Notify Me
+                  </button>
+                </form>
               </motion.div>
             ))}
           </div>
@@ -301,6 +311,27 @@ const Home = () => {
         </div>
       </section>
 
+      {/* --- */}
+      {/* 👥 Trusted by Creators Section */}
+      <section className="py-24 bg-white text-[#1E1E28]">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Trusted by thousands of creators</h2>
+          <p className="text-[#555] max-w-2xl mx-auto mb-8">
+            Our community is growing fast! Join over 3,000 developers, designers, and entrepreneurs who are building and learning with SanchitVerse.
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-8 mt-12">
+            {/* Replace with actual logos/avatars later */}
+            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">A</div>
+            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">B</div>
+            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">C</div>
+            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">D</div>
+            <div className="w-16 h-16 rounded-full bg-[#E6E9F2] flex items-center justify-center text-gray-600 font-bold">E</div>
+          </div>
+          <p className="mt-8 text-sm text-gray-500">...and many more!</p>
+        </div>
+      </section>
+
+      {/* --- */}
       {/* ✍️ Blog Section */}
       <section className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4">
@@ -323,7 +354,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-
+      
+      {/* --- */}
       {/* 🚀 CTA Section */}
       <section className="py-24 bg-white text-[#1E1E28]">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 px-4">

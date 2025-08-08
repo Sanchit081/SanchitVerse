@@ -45,6 +45,10 @@ module.exports = {
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' },
         },
+        shimmer: {
+          "0%, 100%": { "background-position": "left -200px top 0" },
+          "50%": { "background-position": "right -200px top 0" },
+        },
       },
       animation: {
         flicker: 'flicker 1.5s infinite',
@@ -52,6 +56,7 @@ module.exports = {
         wiggle: 'wiggle 1s ease-in-out infinite',
         gradientX: 'gradientX 4s ease infinite',
         rgbBorderAnimation: 'rgbBorderAnimation 6s ease infinite',
+        shimmer: 'shimmer 2.5s infinite',
       },
       backgroundSize: {
         '200': '200% 200%',
