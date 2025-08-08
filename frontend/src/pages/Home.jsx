@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { motion, AnimatePresence } from 'framer-motion';
-
 import Search from '../components/Search';
 import PartyAnim from '../assets/animations/party.json';
 import DigitalMarketingImg from '../assets/products/img1.svg';
@@ -140,7 +139,6 @@ const Home = () => {
           />
         ))}
       </div>
-
       {/* 🔷 Hero Section */}
       <section className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-4 md:px-20 pt-6 pb-10 min-h-[75vh] md:min-h-[90vh]">
         {/* Text content */}
@@ -160,7 +158,6 @@ const Home = () => {
             Join thousands of creators, developers, and learners using <strong className="text-[#3D52A0]">SanchitVerse</strong> to stay ahead of the curve.
           </p>
           <p className="text-[#8697C4] mt-3 max-w-md sm:max-w-lg">We bring you tools, templates, and insights — all in one place.</p>
-
           <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 mt-6">
             <Link to="/products">
               <button className="mt-4 sm:mt-6 px-6 py-3 bg-[#7091E6] text-white rounded-lg font-semibold hover:bg-[#3D52A0] transition-all shadow-lg">
@@ -171,12 +168,10 @@ const Home = () => {
               Learn more →
             </Link>
           </div>
-
           {/* Search Component */}
           <div className="w-full mx-auto mt-8">
             <Search onSearch={(results) => setSearchResults(results)} />
           </div>
-
           {/* Feature highlights (compact) */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
             <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm border">
@@ -186,7 +181,6 @@ const Home = () => {
                 <div className="text-xs text-gray-500">Plug-and-play UI kits & pages</div>
               </div>
             </div>
-
             <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm border">
               <div className="flex-shrink-0 text-2xl">⚡</div>
               <div>
@@ -194,7 +188,6 @@ const Home = () => {
                 <div className="text-xs text-gray-500">Automation scripts to save hours</div>
               </div>
             </div>
-
             <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm border">
               <div className="flex-shrink-0 text-2xl">📚</div>
               <div>
@@ -203,7 +196,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-
           {/* Search results (unchanged) */}
           {searchResults.length > 0 && (
             <div className="w-full mt-6 bg-white border border-gray-200 rounded-xl shadow-md p-6 overflow-x-auto">
@@ -221,8 +213,7 @@ const Home = () => {
             </div>
           )}
         </motion.div>
-
-        {/* Animation */}
+        {/* Animation & Orbit */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -239,15 +230,49 @@ const Home = () => {
               maxWidth: '520px'
             }}
           />
+          {/* Orbit Circle and Dots */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] md:w-[70%] md:h-[70%] flex items-center justify-center">
+            {/* The Orbit Circle */}
+            <motion.div
+              className="absolute w-full h-full border border-dashed border-[#8697C4] rounded-full"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+            />
+            {/* Orbiting Dot 1 */}
+            <motion.div
+              className="absolute w-4 h-4 rounded-full bg-[#3D52A0]"
+              animate={{
+                x: [0, 200, 0, -200, 0],
+                y: [0, 0, 200, 0, -200],
+              }}
+              transition={{
+                duration: 25,
+                ease: "linear",
+                repeat: Infinity,
+              }}
+            />
+            {/* Orbiting Dot 2 */}
+            <motion.div
+              className="absolute w-3 h-3 rounded-full bg-[#7091E6]"
+              animate={{
+                x: [0, -150, 0, 150, 0],
+                y: [0, 0, -150, 0, 150],
+              }}
+              transition={{
+                duration: 25,
+                ease: "linear",
+                repeat: Infinity,
+                delay: 5,
+              }}
+            />
+          </div>
         </motion.div>
       </section>
-
       {/* 🛒 Products Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <motion.h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 text-[#3D52A0]">Featured Products</motion.h2>
           <p className="text-center text-[#8697C4] mb-12 text-lg">Explore curated tools crafted for creators, students & solopreneurs 🚀</p>
-
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product, index) => (
               <motion.div
@@ -262,13 +287,11 @@ const Home = () => {
                     Most Selling
                   </span>
                 )}
-
                 {product.comingSoon && (
                   <span className="absolute top-4 left-4 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                     Launching Soon
                   </span>
                 )}
-
                 <img
                   src={product.image}
                   alt={product.name}
@@ -286,7 +309,6 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
-
           <div className="text-center mt-8">
             <Link to="/products">
               <button className="px-6 py-3 bg-transparent border border-[#E6E9F2] rounded-lg text-[#3D52A0] hover:bg-[#F7F9FF] transition">
@@ -296,7 +318,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       {/* 👥 Why SanchitVerse? Section (formerly info card) */}
       <section className="py-24 bg-white text-[#1E1E28]">
         <div className="max-w-6xl mx-auto px-4 text-center">
@@ -323,7 +344,6 @@ const Home = () => {
           </Link>
         </div>
       </section>
-
       {/* --- */}
       {/* 👥 Trusted by Creators Section */}
       <section className="py-24 bg-white text-[#1E1E28]">
@@ -348,7 +368,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       {/* --- */}
       {/* ✍️ Blog Section */}
       <section className="py-24 bg-white">
@@ -392,7 +411,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       {/* 🎉 Newsletter & Confetti */}
       <AnimatePresence>
         {(showNewsletter || showConfetti) && (
@@ -409,7 +427,6 @@ const Home = () => {
                   <Player autoplay loop={false} keepLastFrame src={PartyAnim} style={{ width: '150%', height: '150%', transform: 'scale(1.5)', marginTop: '-60px' }} />
                 </div>
               )}
-
               {showNewsletter && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -431,7 +448,6 @@ const Home = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
       {/* 🔔 Toast */}
       {showToast && (
         <motion.div
